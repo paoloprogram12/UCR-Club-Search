@@ -10,3 +10,10 @@
   * Note: you can add new dependencies to the project using `uv add <package-name>`
 * Run the project `uv run main.py`
 * You can learn more about `uv` [here](https://docs.astral.sh/uv/)
+
+## Run with docker
+
+* `docker compose up -d --build`
+  * please comment out nvidia gpu in the docker-compose.yml file if your
+    computer does not have one.
+* The webapp port will be avaliable at 8000

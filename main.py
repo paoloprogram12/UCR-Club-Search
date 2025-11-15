@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer, util
 from dataclasses import dataclass
+from flask import Flask, render_template
 
 
 @dataclass
@@ -40,10 +41,20 @@ def score(club: Club, user_input: list[str]) -> float:
     return final_score / len(user_input)
 
 
+app = Flask(__name__, static_folder="web/static", template_folder="web/templates")
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
 def main():
     club = Club("chinese club", ["chinese", "language", "liguistic"])
     user_input = ["manderin"]
+
     print(score(club, user_input))
+    app.run(host="0.0.0.0", port=8000)
 
 
 if __name__ == "__main__":

@@ -37,13 +37,12 @@ def score(club: Club, user_input: list[str]) -> float:
         for phrase in user_input:
             final_score += cos_sim(label, phrase)
 
-    return final_score
+    return final_score / len(user_input)
 
 
 def main():
     club = Club("chinese club", ["chinese", "language", "liguistic"])
     user_input = ["manderin"]
-
     print(score(club, user_input))
 
 

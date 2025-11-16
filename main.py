@@ -36,10 +36,6 @@ def questions():
 
 
 def main():
-    club = Club("chinese club", ["chinese", "language", "liguistic"])
-    user_input = ["manderin"]
-
-    print(score(club, user_input))
     app.run(host="0.0.0.0", port=8000)
 
 

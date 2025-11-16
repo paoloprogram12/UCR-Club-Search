@@ -1,3 +1,41 @@
+// Function to display clubs as cards
+function displayClubs(clubs) {
+  let results_div = document.getElementById("results");
+  results_div.innerHTML = "";
+
+  if (clubs.length === 0) {
+    results_div.innerHTML = "<p>No clubs found matching your interests.</p>";
+    return;
+  }
+
+  clubs.forEach((item) => {
+    let card = document.createElement("div");
+    card.className = "club-card";
+    card.textContent = item.name;
+    results_div.appendChild(card);
+  });
+}
+
+// Check for matched clubs from questionnaire on page load
+function checkMatchedClubs() {
+  const matchedClubs = sessionStorage.getItem('matchedClubs');
+
+  if (matchedClubs) {
+    try {
+      const clubs = JSON.parse(matchedClubs);
+      // Display the top 5 matched clubs
+      displayClubs(clubs);
+      // Clear sessionStorage after displaying
+      sessionStorage.removeItem('matchedClubs');
+    } catch (error) {
+      console.error('Error parsing matched clubs:', error);
+    }
+  }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', checkMatchedClubs);
+
 async function send() {
   let search_element = document.getElementById("search");
   let phrase_list = search_element.value.trim().split(",").filter(s => s.trim() !== "");
@@ -33,14 +71,6 @@ async function send() {
     final_results = filtered;
   }
 
-  // Display results as cards
-  let results_div = document.getElementById("results");
-  results_div.innerHTML = "";
-
-  final_results.forEach((item) => {
-    let card = document.createElement("div");
-    card.className = "club-card";
-    card.textContent = item.name;
-    results_div.appendChild(card);
-  });
+  // Display results using the shared function
+  displayClubs(final_results);
 }

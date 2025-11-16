@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlander OrgQuest - Find My Org</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
@@ -40,7 +41,7 @@
 
         <div id="specified-container"></div>
 
-        <button>Confirm</button>
+        <button onclick="submitInterests()">Confirm</button>
     </div>
 
 
@@ -216,6 +217,49 @@
     // Switch to specified step
     showStep('step-specified');
 
+    }
+
+    async function submitInterests() {
+        // Collect all checked specified interests
+        const selectedInterests = Array.from(
+            document.querySelectorAll('input[name="specified-interests"]:checked')
+        ).map(input => input.value);
+
+        if (selectedInterests.length === 0) {
+            alert("Please select at least one interest!");
+            return;
+        }
+
+        try {
+            // Send interests to backend for scoring
+            const response = await fetch('/scores', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(selectedInterests)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to get scores');
+            }
+
+            const clubs = await response.json();
+
+            // Sort by score and get top 5
+            const top5 = clubs
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 5);
+
+            // Store results in sessionStorage
+            sessionStorage.setItem('matchedClubs', JSON.stringify(top5));
+
+            // Redirect to home page
+            window.location.href = '/';
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to find matching clubs. Please try again.');
+        }
     }
 
 </script>

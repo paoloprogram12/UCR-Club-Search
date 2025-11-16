@@ -6,8 +6,48 @@
     <title>Highlander OrgQuest - Find My Org</title>
 </head>
 <body>
+    <header>
+      <h1>Highlander OrgQuest</h1>
+    </header>
+    <!-- First Page -->
+    <div class="step" id="step-gender">
+        <h2 id="title">What is your Gender?</h2>
+        <button>Male</button>
+        <button>Female</button>
+        <button>Non-Binary</button>
+        <button>Other</button>
+        <button>Prefer Not to Say</button>
+        <button onclick="showStep('step-interests')">Confirm</button>
+    </div>
+    <!-- Second Page -->
+     <div class="step" id="step-interests" style="display: none;">
+        <h2>What are your Interests?</h2>
+        <button>Academics and Professional</button>
+        <button>Arts and Expression</button>
+        <button>Cultural</button>
+        <button>Greek Life</button>
+        <button>Graduate Organizations</button>
+        <button>Action and Awareness</button>
+        <button>Recreational</button>
+        <button>Service</button>
+        <button>Spiritual and Religious</button>
+        <button onclick="showStep('step-specified')">Confirm</button>
+     </div>
+     <!-- Third Page -->
+      <div class="step" id="step-specified" style="display: none;">
+        <h2>Please select your Specified Interests:</h2>
+        <button>Confirm</button>
+      </div>
 
-    <header></header>
     
 </body>
+
+<script>
+    function showStep(stepID) {
+        document.querySelectorAll('.step').forEach(step => {
+            step.style.display = 'none';
+        });
+        document.getElementById(stepID).style.display = 'block';
+    }
+</script>
 </html>

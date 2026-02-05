@@ -40,7 +40,7 @@ async function send() {
   let search_element = document.getElementById("search");
   let phrase_list = search_element.value.trim().split(",").filter(s => s.trim() !== "");
 
-  let response = await fetch("http://localhost:8000/scores", {
+  let response = await fetch("/scores", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -79,7 +79,7 @@ async function send() {
 async function showAllOrgs() {
   try {
     // Send empty array to get all clubs with their base scores
-    let response = await fetch("http://localhost:8000/scores", {
+    let response = await fetch("/scores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
